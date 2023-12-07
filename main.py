@@ -39,23 +39,25 @@ def inserirDados():
     
     except Exception as ex:
         if isinstance(ex, psycopg2.errors.NotNullViolation):
-            print("Um dos valores inseridos não pode ser null. Atribua um valor concreto para ele.")
+            print("[ERRO] Um dos valores inseridos não pode ser null. Atribua um valor concreto para ele.")
             print(ex)
 
         elif isinstance(ex, psycopg2.errors.UniqueViolation):
             print(ex)
-            print("Este valor de chave já existe no banco, por favor, insira um valor válido e único")
+            print("[ERRO] Este valor de chave já existe no banco, por favor, insira um valor válido e único")
         
         elif isinstance(ex, psycopg2.errors.CheckViolation):
             print(ex)
-            print("Opa, cuidado! Para esse valor existir, precisa seguir umas regrinhas, tente novamente")
+            print("[ERRO] Opa, cuidado! Para esse valor existir, precisa seguir umas regrinhas, tente novamente")
         
         elif isinstance(ex, psycopg2.errors.ForeignKeyViolation):
             print(ex)
-            print("ops, um dos valores é chave estrangeira e precisa existir em outra tabela. Tente um valor já existente")
+            print("[ERRO] ops, um dos valores é chave estrangeira e precisa existir em outra tabela. Tente um valor já existente")
         
         else:
-            print("Eita, erro desconhecido, reporta pra gente ae")
+            print(ex)
+            print(type(ex))
+            print("[ERRO] Eita, erro desconhecido, reporta pra gente ae")
         
         pass
     
