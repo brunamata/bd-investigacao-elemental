@@ -66,9 +66,9 @@ def inserirDados():
     conn.close()
 
 
-if __name__ == '__main__':
-    teste()
-    inserirDados()
+# if __name__ == '__main__':
+#     teste()
+#     inserirDados()
     
     # TODO: interface para o usuário
     # TODO: decidir como vai ser
@@ -102,3 +102,75 @@ if __name__ == '__main__':
 
     # TODO (Rafa): cuidar da manipulação dos dados para enviar corretamente para as funções e evitar erros
 
+def limpar_terminal():
+    if os.name == 'posix':  # Para sistemas Unix/Linux/Mac
+        os.system('clear')
+    elif os.name == 'nt':  # Para sistemas Windows
+        os.system('cls')
+
+def menu_principal():
+    print("\n============= MENU =============\n")
+    print("    1 - Inserir nova pesquisa")
+    print("    2 - Consultar")
+    print("    0 - Sair\n")
+
+def menu_consultar():
+    print("\n============= MENU =============\n")
+    print("    1 - Consultar planeta")
+    print("    2 - Consultar funcionários")
+    print("    3 - Consultar equipamentos")
+    print("    4 - Consultar descobertas")
+    print("    0 - Retornar\n")
+
+def menu_inserir_pesquisa():
+    print("Selecione uma opção de inserção de pesquisa:")
+    print("1 - Planetas com mais de uma lua")
+    print("2 - Todos os planetas")
+
+def processar_opcao(opcao):
+    
+    # Inserir pesquisa
+    if opcao == 1: 
+        menu_inserir_pesquisa()
+        # Chame a função apropriada para lidar com a inserção de pesquisa
+
+    # Realizar Consulta
+    elif opcao == 2:
+        menu_consultar()
+        sub_opcao = int(input("Escolha uma opção de consulta: "))
+
+        if sub_opcao == 0:
+            print("Retornando")
+
+        # Consultar planeta
+        elif sub_opcao == 1:
+            consultar_planeta()
+
+        # Todos funcionario
+        elif sub_opcao == 2:
+            consultar_funcionario()
+
+        elif sub_opcao == 3:
+            consultar_equipamentos()
+        
+        elif sub_opcao == 4:
+            consultar_descobertas()
+
+        # Adicionar mais?
+    
+    # Sair do programa
+    elif opcao == 0:
+        print("Saindo do programa.")
+
+    # Opcao nao valida
+    else:
+        print("Opção inválida. Tente novamente.")
+
+if __name__ == '__main__':
+    opcao = 1
+    while opcao:
+        limpar_terminal()
+        menu_principal()
+        opcao = int(input("Escolha uma opção: "))
+        limpar_terminal()
+        processar_opcao(opcao)
