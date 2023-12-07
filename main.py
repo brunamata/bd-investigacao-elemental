@@ -1,15 +1,15 @@
 import psycopg2
 import os
-from dotenv import load_dotenv
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
-username = os.environ['bd_username']
-password = os.environ['bd_password']
+username = "utagawa"
+password = "tico"
 
 
 def teste(): 
     # Conecta no Banco de Dados
-    conn = psycopg2.connect(f"dbname=InvestigacaoElemental user={username} password={password}")
+    conn = psycopg2.connect(f"dbname=investigacaoelemental user={username} password={password}")
 
     # Abre um cursor para realizar as operações do BD
     cur = conn.cursor()
@@ -27,7 +27,7 @@ def teste():
 
 
 def inserirDados():
-    conn = psycopg2.connect(f"dbname=InvestigacaoElemental user={username} password={password}")
+    conn = psycopg2.connect(f"dbname=investigacaoelemental user={username} password={password}")
     cur = conn.cursor()
 
 
@@ -108,14 +108,17 @@ def limpar_terminal():
     elif os.name == 'nt':  # Para sistemas Windows
         os.system('cls')
 
-def menu_principal():
+def menu_base():
     print("\n============= MENU =============\n")
+
+def menu_principal():
+    menu_base()
     print("    1 - Inserir nova pesquisa")
     print("    2 - Consultar")
     print("    0 - Sair\n")
 
 def menu_consultar():
-    print("\n============= MENU =============\n")
+    menu_base()
     print("    1 - Consultar planeta")
     print("    2 - Consultar funcionários")
     print("    3 - Consultar equipamentos")
@@ -126,6 +129,34 @@ def menu_inserir_pesquisa():
     print("Selecione uma opção de inserção de pesquisa:")
     print("1 - Planetas com mais de uma lua")
     print("2 - Todos os planetas")
+
+def consultar_planeta():
+    menu_base()
+    print("\nConsulta de Planetas:\n")
+    # Lógica de consulta ao banco de dados para planetas
+    print("Aqui estão os detalhes dos planetas.")
+    input("Pressione enter para sair: ")
+
+def consultar_funcionario():
+    menu_base()
+    print("\nConsulta de Funcionários:\n")
+    # Lógica de consulta ao banco de dados para funcionários
+    print("Aqui estão os detalhes dos funcionários.")
+    input("Pressione enter para sair: ")
+
+def consultar_equipamentos():
+    menu_base()
+    print("\nConsulta de Equipamentos:\n")
+    # Lógica de consulta ao banco de dados para equipamentos
+    print("Aqui estão os detalhes dos equipamentos.")
+    input("Pressione enter para sair: ")
+
+def consultar_descobertas():
+    menu_base()
+    print("\nConsulta de Descobertas:\n")
+    # Lógica de consulta ao banco de dados para descobertas
+    print("Aqui estão os detalhes das descobertas.")
+    input("Pressione enter para sair: ")
 
 def processar_opcao(opcao):
     
@@ -138,6 +169,7 @@ def processar_opcao(opcao):
     elif opcao == 2:
         menu_consultar()
         sub_opcao = int(input("Escolha uma opção de consulta: "))
+        limpar_terminal()
 
         if sub_opcao == 0:
             print("Retornando")
@@ -150,13 +182,13 @@ def processar_opcao(opcao):
         elif sub_opcao == 2:
             consultar_funcionario()
 
+        # Consultar Equipamentos
         elif sub_opcao == 3:
             consultar_equipamentos()
         
+        # Consultar Descobertas
         elif sub_opcao == 4:
             consultar_descobertas()
-
-        # Adicionar mais?
     
     # Sair do programa
     elif opcao == 0:
