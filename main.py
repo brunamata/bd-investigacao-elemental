@@ -1,15 +1,14 @@
 import psycopg2
 import os
-# from dotenv import load_dotenv
-# load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
-username = "utagawa"
-password = "tico"
-
+username = os.environ['bd_username']
+password = os.environ['bd_password']
 
 def teste(): 
     # Conecta no Banco de Dados
-    conn = psycopg2.connect(f"dbname=investigacaoelemental user={username} password={password}")
+    conn = psycopg2.connect(f"dbname=InvestigacaoElemental user={username} password={password}")
 
     # Abre um cursor para realizar as operações do BD
     cur = conn.cursor()
@@ -27,8 +26,8 @@ def teste():
 
 
 def inserirDados():
-    conn = psycopg2.connect(f"dbname=investigacaoelemental user={username} password={password}")
-    cur = conn.cursor()
+    conn = psycopg2.connect(f"dbname=InvestigacaoElemental user={username} password={password}")
+    cur = conn.cursor() 
 
 
     #   Bruna aqui, provavelmente vou arrumar esse tratamento, preciso saber melhor 
