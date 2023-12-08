@@ -3,22 +3,26 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+dbname = os.environ['bd_name']
 username = os.environ['bd_username']
 password = os.environ['bd_password']
 
 def teste(): 
     # Conecta no Banco de Dados
-    conn = psycopg2.connect(f"dbname=InvestigacaoElemental user={username} password={password}")
+    conn = psycopg2.connect(f"dbname={dbname} user={username} password={password}")
 
     # Abre um cursor para realizar as operações do BD
     cur = conn.cursor()
 
     # Executando uma query
-    cur.execute("SELECT * FROM amostra")
+    cur.execute("SELECT * FROM amostra;")
 
     # Recuperando os resultados
     records = cur.fetchall()
     print(records)
+    for i in range(0, len(records)):
+        print("item ", i)
+        print(records[i])
 
     # Fecha a comunicação e conexão com o banco de dados
     cur.close()
@@ -101,6 +105,44 @@ def inserirDados():
 
     # TODO (Rafa): cuidar da manipulação dos dados para enviar corretamente para as funções e evitar erros
 
+
+# TODO
+# inserir funcionario
+# 
+
+def insertion_funcionario(cpf, cargo, nome, endereco, telefone, t_sanguineo):
+    sql = "INSERT INTO funcionario (cpf, cargo, nome, endereco, telefone, tipo_sanguineo) VALUES (%s, %s, %s, %s, %s, %s);"
+    data = (cpf, cargo, nome, endereco, telefone, t_sanguineo, )
+    
+    # Inicia transacao
+    conn = psycopg2.connect(f"dbname={dbname} user={username} password={password}")
+    cur = conn.cursor()
+    try:
+        cur.execute(sql, data)
+        print("Funcionario inserido com sucesso!")
+
+    except Exception as ex:        
+        print(ex)
+        print(type(ex))
+        print("[ERRO] Eita, erro desconhecido")
+        pass
+
+    conn.commit()
+    cur.close()
+    conn.close()
+    # Encerra transacao
+
+def cadastrar_funcionario():
+    print("\n============= CADASTRAR FUNCIONARIO =============\n")
+    cpf = str(input("Insira o CPF: "))
+    cargo = str(input("Insira o cargo: "))
+    nome = str(input("Insira o nome: "))
+    endereco = str(input("Insira o endereço: "))
+    telefone = str(input("Insira o telefone: "))
+    t_sanguineo = str(input("Insira o tipo sanguineo: "))
+    print(cpf, cargo, nome, endereco, telefone, t_sanguineo)
+    insertion_funcionario(cpf, cargo, nome, endereco, telefone, t_sanguineo)
+
 def limpar_terminal():
     if os.name == 'posix':  # Para sistemas Unix/Linux/Mac
         os.system('clear')
@@ -114,6 +156,7 @@ def menu_principal():
     menu_base()
     print("    1 - Inserir nova pesquisa")
     print("    2 - Consultar")
+    print("    5 - Inserir")
     print("    0 - Sair\n")
 
 def menu_consultar():
@@ -188,7 +231,35 @@ def processar_opcao(opcao):
         # Consultar Descobertas
         elif sub_opcao == 4:
             consultar_descobertas()
-    
+
+        # Teste
+    elif opcao == 5:
+        print("opcao 5")
+        teste()
+    elif opcao == 2:
+        menu_consultar()
+        sub_opcao = int(input("Escolha uma opção de consulta: "))
+        limpar_terminal()
+
+        if sub_opcao == 0:
+            print("Retornando")
+
+        # Consultar planeta
+        elif sub_opcao == 1:
+            consultar_planeta()
+
+        # Todos funcionario
+        elif sub_opcao == 2:
+            consultar_funcionario()
+
+        # Consultar Equipamentos
+        elif sub_opcao == 3:
+            consultar_equipamentos()
+        
+        # Consultar Descobertas
+        elif sub_opcao == 4:
+            consultar_descobertas()
+
     # Sair do programa
     elif opcao == 0:
         print("Saindo do programa.")
@@ -198,10 +269,11 @@ def processar_opcao(opcao):
         print("Opção inválida. Tente novamente.")
 
 if __name__ == '__main__':
+    inserir_funcionario()
     opcao = 1
     while opcao:
-        limpar_terminal()
+        #limpar_terminal()
         menu_principal()
         opcao = int(input("Escolha uma opção: "))
-        limpar_terminal()
         processar_opcao(opcao)
+        # limpar_terminal()
