@@ -118,11 +118,17 @@ values ('111', 'Robo', TO_DATE('19/02/2000', 'dd/mm/yyyy'), 'Rastrear moleculas'
 insert into equipamento_exploracao(num_patrimonio, nome, data_fabricacao, funcao)
 values ('222', 'Telescópio', TO_DATE('28/02/2000', 'dd/mm/yyyy'), 'Enxergar melhor');
 
+insert into equipamento_exploracao(num_patrimonio, nome, data_fabricacao, funcao)
+values ('333', 'Termometro de solo', TO_DATE('05/03/2022', 'dd/mm/yyyy'), 'Medir temperatura do solo');
+
 insert into manutencao_equipamento(engenheiro, equipamento)
 values('123', '111');
 
 insert into manutencao_equipamento(engenheiro, equipamento)
 values('999', '222');
+
+insert into manutencao_equipamento(engenheiro, equipamento)
+values('123', '333');
 
 insert into amostra(num_amostra, planeta, coord_geografica, descricao)
 values('888', '123456789', '248;-90;78', 'amostra recolhida no solo');
