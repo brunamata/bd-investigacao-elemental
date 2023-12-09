@@ -46,9 +46,43 @@ def exec_insertion_funcionario(cpf, cargo, nome, endereco, telefone, t_sanguineo
     conn.close()
     # Encerra transacao
 
-def menu_inserir_funcionario():
-        print("    1 - Inserir funcionario")
-        print("    0 - Retornar ao menu anterior")
+def consultar(tabela):
+    menu_base()
+    print(f"\nConsulta de {tabela}:\n")
+    print(f"Aqui estão os detalhes de {tabela}.")
+
+    conn = psycopg2.connect(f"dbname={dbname} user={username} password={password}")
+    cur = conn.cursor()
+    sql = f"select * from {tabela}"
+
+    #definindo esquemas para pegar os headers das tabelas
+    esquemas = {
+        "planeta": ['Coordenada', 'Nome', 'Tipo', 'Sistema', 'N de Luas'],
+        "funcionario": ['CPF', 'Cargo', 'Nome', 'Endereço', 'Telefone', 'Tipo Sanguíneo'],
+        "equipamento_exploracao": ['Num de patrimonio', 'Nome', 'Data Fabricaçao', 'Funçao'],
+        "descoberta": ['Codigo da Pesquisa', 'Elemento Quimico']
+    }
+
+    headers = esquemas[tabela]
+
+    try:
+        cur.execute(sql)
+        records = cur.fetchall()
+
+        #montando tabela para apresentacao
+        table = tabulate(records, headers=headers, tablefmt='fancy_grid', missingval="-")
+        print(table)
+
+    except psycopg2.DatabaseError as ex:        
+        print("[ERRO] Erro interno na consulta do banco")
+        print(ex)
+        pass
+
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    input("Pressione enter para retornar ao menu: ")
 
 def inserir_funcionario():
     print("\n============= CADASTRAR FUNCIONARIO =============\n")
@@ -71,148 +105,26 @@ def menu_base():
 
 def menu_principal():
     menu_base()
-    print("    1 - Inserir nova pesquisa")
-    print("    2 - Inserir novo funcionario")
-    print("    3 - Consultar tabelas")
+    print("    1 - Inserir novo funcionario")
+    print("    2 - Consultar tabelas")
     print("    0 - Sair\n")
 
 def menu_consultar():
     menu_base()
-    print("    1 - Consultar planeta")
+    print("    1 - Consultar planetas")
     print("    2 - Consultar funcionários")
     print("    3 - Consultar equipamentos")
     print("    4 - Consultar descobertas")
     print("    0 - Retornar\n")
 
-def menu_inserir_pesquisa():
-    print("Selecione uma opção de inserção de pesquisa:")
-    print("1 - Planetas com mais de uma lua")
-    print("2 - Todos os planetas")
-
-def consultar_planeta():
-    menu_base()
-    print("\nConsulta de Planetas:\n")
-    print("Aqui estão os detalhes dos planetas.")
-
-    conn = psycopg2.connect(f"dbname={dbname} user={username} password={password}")
-    cur = conn.cursor()
-    sql = "select * from planeta"
-    try:
-        cur.execute(sql)
-        records = cur.fetchall()
-        headers = ['Coordenada', 'Nome', 'Tipo', 'Sistema', 'N de Luas']
-        table = tabulate(records, headers=headers, tablefmt='fancy_grid', missingval="-")
-        print(table)
-
-    except Exception as ex:        
-        print(ex)
-        print(type(ex))
-        print("[ERRO] Eita, erro desconhecido")
-        pass
-    conn.commit()
-    cur.close()
-    conn.close()
-
-    input("Pressione enter para sair: ")
-
-def consultar_funcionario():
-    menu_base()
-    print("\nConsulta de Funcionários:\n")
-    print("Aqui estão os detalhes dos funcionários.")
-
-    conn = psycopg2.connect(f"dbname={dbname} user={username} password={password}")
-    cur = conn.cursor()
-    sql = "select * from funcionario"
-    try:
-        cur.execute(sql)
-        records = cur.fetchall()
-        headers = ['CPF', 'Cargo', 'Nome', 'Endereço', 'Telefone', 'Tipo Sanguíneo']
-        table = tabulate(records, headers=headers, tablefmt='fancy_grid', missingval="-")
-        print(table)
-
-    except Exception as ex:        
-        print(ex)
-        print(type(ex))
-        print("[ERRO] Eita, erro desconhecido")
-        pass
-    conn.commit()
-    cur.close()
-    conn.close()
-
-    input("Pressione enter para sair: ")
-
-
-def consultar_equipamentos():
-    menu_base()
-    print("\nConsulta de Equipamentos:\n")
-    print("Aqui estão os detalhes dos equipamentos.")
-
-    conn = psycopg2.connect(f"dbname={dbname} user={username} password={password}")
-    cur = conn.cursor()
-    sql = "select * from equipamento_exploracao"
-    try:
-        cur.execute(sql)
-        records = cur.fetchall()
-        headers = ['Num de patrimonio', 'Nome', 'Data Fabricaçao', 'Funçao']
-        table = tabulate(records, headers=headers, tablefmt='fancy_grid', missingval="-")
-        print(table)
-
-    except Exception as ex:        
-        print(ex)
-        print(type(ex))
-        print("[ERRO] Eita, erro desconhecido")
-        pass
-    conn.commit()
-    cur.close()
-    conn.close()
-    
-    input("Pressione enter para sair: ")
-
-
-def consultar_descobertas():
-    menu_base()
-    print("\nConsulta de Descobertas:\n")
-    print("Aqui estão os detalhes das descobertas.")
-
-    conn = psycopg2.connect(f"dbname={dbname} user={username} password={password}")
-    cur = conn.cursor()
-    sql = "select * from descoberta"
-    try:
-        cur.execute(sql)
-        records = cur.fetchall()
-        headers = ['Codigo da Pesquisa', 'Elemento Quimico']
-        table = tabulate(records, headers=headers, tablefmt='fancy_grid', missingval="-")
-
-        print(table)
-
-    except Exception as ex:        
-        print(ex)
-        print(type(ex))
-        print("[ERRO] Eita, erro desconhecido")
-        pass
-    conn.commit()
-    cur.close()
-    conn.close()
-    input("Pressione enter para sair: ")
-
 def processar_opcao(opcao):
     
     # Inserir pesquisa
     if opcao == 1: 
-        menu_inserir_pesquisa()
-        # Chame a função apropriada para lidar com a inserção de pesquisa
-    elif opcao == 2:
-        menu_inserir_funcionario()
-        sub_opcao = int(input("Escolha uma opção: "))
-        limpar_terminal()
-
-        if sub_opcao == 0:
-            print("Retornando")
-        elif sub_opcao == 1:
-            inserir_funcionario()
+        inserir_funcionario()
 
     # Realizar Consulta
-    elif opcao == 3:
+    elif opcao == 2:
         menu_consultar()
         sub_opcao = int(input("Escolha uma opção de consulta: "))
         limpar_terminal()
@@ -222,19 +134,19 @@ def processar_opcao(opcao):
 
         # Consultar planeta
         elif sub_opcao == 1:
-            consultar_planeta()
+            consultar("planeta")
 
         # Todos funcionario
         elif sub_opcao == 2:
-            consultar_funcionario()
+            consultar("funcionario")
 
         # Consultar Equipamentos
         elif sub_opcao == 3:
-            consultar_equipamentos()
+            consultar("equipamento_exploracao")
         
         # Consultar Descobertas
         elif sub_opcao == 4:
-            consultar_descobertas()
+            consultar("descoberta")
 
     # Sair do programa
     elif opcao == 0:
