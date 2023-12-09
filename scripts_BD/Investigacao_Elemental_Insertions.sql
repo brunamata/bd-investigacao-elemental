@@ -4,6 +4,37 @@ values('Universidade Federal do Parana', 'UFPR');
 insert into universidade(nome_completo, sigla)
 values('Universidade de Sao Paulo', 'USP');
 
+insert into formacao(universidade, funcionario, data_formacao, grau, curso)
+values('Universidade Federal do Parana',  '11111111111', TO_DATE ('11/04/1955', 'dd/mm/yyyy'), 'mestrado', 'antropologia');
+
+insert into formacao(universidade, funcionario, data_formacao, grau, curso)
+values('Universidade de Sao Paulo', '56982145778', TO_DATE ('25/03/2005', 'dd/mm/yyyy'), 'bacharelado', 'paleontologia');
+
+insert into formacao(universidade, funcionario, data_formacao, grau, curso)
+values('Universidade de Sao Paulo', '44444444444', TO_DATE ('20/10/201999', 'dd/mm/yyyy'), 'bacharelado', 'arquitetura e urbanismo');
+
+insert into formacao(universidade, funcionario, data_formacao, grau, curso)
+values('Universidade estadual paulista', '44444444444', TO_DATE ('15/06/2015', 'dd/mm/yyyy'), 'mestrado', 'fisica biomolecular');
+
+insert into formacao(universidade, funcionario, data_formacao, grau, curso)
+values('Universidade de Sao Paulo', '77777777777', TO_DATE ('16/11/2010', 'dd/mm/yyyy'), 'mestrado', 'zoologia');
+
+insert into formacao(universidade, funcionario, data_formacao, grau, curso)
+values('Universidade Federal do Parana', '77777777777', TO_DATE ('23/12/2020', 'dd/mm/yyyy'), 'doutorado', 'quimica');
+
+insert into formacao(universidade, funcionario, data_formacao, grau, curso)
+values('Universidade estadual paulista',  '69696969696', TO_DATE ('23/01/1948', 'dd/mm/yyyy'), 'doutorado', 'bioquimico');
+
+insert into formacao(universidade, funcionario, data_formacao, grau, curso)
+values('Universidade de Campinas',  '45454545454', TO_DATE ('14/02/2003', 'dd/mm/yyyy'), 'graduacao', 'aeronautica');
+
+insert into formacao(universidade, funcionario, data_formacao, grau, curso)
+values('Universidade de Campinas',  '45454545454', TO_DATE ('25/11/2015', 'dd/mm/yyyy'), 'mestrado', 'marmoraria');
+
+insert into formacao(universidade, funcionario, data_formacao, grau, curso)
+values('Universidade de Campinas',  '98567412389', TO_DATE ('30/05/2000', 'dd/mm/yyyy'), 'graduacao', 'mecanica hidraulica');
+
+
 insert into funcionario(cpf, cargo, nome, endereco, telefone, tipo_sanguineo)
 values('11111111111', 'astronauta', 'Rodrigo', 'Rua Santos, 314', '679912345678', 'AB+');
 
@@ -30,6 +61,18 @@ values('88888888888', 'supervisor', 'Rosana', 'Rua Tinca, 999', '18998253615', '
 
 insert into funcionario(cpf, cargo, nome, endereco, telefone, tipo_sanguineo)
 values('99999999999', 'astronauta', 'Karina', 'Rua Marechal, 327', '1563712523', 'B-');
+
+insert into funcionario(cpf, cargo, nome, endereco, telefone, tipo_sanguineo)
+values('56982145778', 'astronauta', 'Vera', 'Rua alameda dos anjos, 666', null, null);
+
+insert into funcionario(cpf, cargo, nome, endereco, telefone, tipo_sanguineo)
+values('45454545454', 'astronauta', 'Aliel', 'Rua lauro gomes, 458', null, null);
+
+insert into funcionario(cpf, cargo, nome, endereco, telefone, tipo_sanguineo)
+values('69696969696', 'cientista', 'Ariel', 'Rua Panamera, 333', null, 'B-');
+
+insert into funcionario(cpf, cargo, nome, endereco, telefone, tipo_sanguineo)
+values('98567412389', 'astronauta', 'Marcos', 'Rua Alexandre Melo, 189', null, 'B+');
 
 insert into coordenador(cpf)
 values('22222222222');
